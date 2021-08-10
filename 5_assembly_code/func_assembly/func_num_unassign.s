@@ -1,10 +1,4 @@
 
-
-
-mov s1 0 // s1 <= 0 (row)
-mov s2 0 // s2 <= 0 (column)
-
-
 number_unassigned:
 mov a2 0 // a2 <= num_unassign return value
 mov a3 0 // a3 <= i
@@ -16,6 +10,7 @@ j_loop:
 
 mul a6, a3, SIZE 
 add a6, a6, a4	// get address of data matrix[i][j]
+add a6 a6 a5
 ld a7, a5, a6   //load matrix[i][j] to  
 
 bnez a7, jpp //matrix[i][j]!=0, pass operation inside for loop and keep going

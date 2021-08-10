@@ -1,4 +1,4 @@
 all:	
 	mkdir -p obj
-	g++ -o obj/SUDOKU mini_sudoku.cpp -g
-	./obj/SUDOKU
+	g++ -o obj/sudoku sudoku_algo_cpp.cpp -g
+	./obj/sudoku

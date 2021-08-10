@@ -48,7 +48,6 @@ mov t2 t4   // j= col_start
 
 addi t5 t1 3 // t5 <= row_start+3, end of i_loop
 addi t6 t2 3 // t6 <= col_start+3, end of j_loop
-j cell_loop
 
 cell_loop_i:
 cell_loop_j:

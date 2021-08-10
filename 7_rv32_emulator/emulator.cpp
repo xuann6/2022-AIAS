@@ -8,9 +8,9 @@
 #include "linenoise.hpp"
 
 // 64 KB
-#define MEM_BYTES 0x100000000//64k bytes memory
+#define MEM_BYTES 0x100000//64k bytes memory
 #define TEXT_OFFSET 0
-#define DATA_OFFSET 8192*4*4
+#define DATA_OFFSET 8192
 
 #define MAX_LABEL_COUNT 128
 #define MAX_LABEL_LEN 32
@@ -221,7 +221,6 @@ int parse_reg(char* tok, int line, bool strict = true) {
 	if ( streq(tok, "s7") ) return 23;
 	if ( streq(tok, "s8") ) return 24;
 	if ( streq(tok, "s9") ) return 25;
-	if ( streq(tok, "s10") ) return 26;
 	if ( streq(tok, "s11") ) return 27;
 	if ( streq(tok, "t3") ) return 28;
 	if ( streq(tok, "t4") ) return 29;
@@ -771,6 +770,8 @@ void execute(uint8_t* mem, instr* imem, label_loc* labels, int label_count, bool
 	uint32_t rf_mirror[32];
 	uint32_t pc = 0;
 	uint32_t inst_cnt = 0;
+	int j=0;
+	int k=0;
 	for ( int i = 0; i < 32; i++ ) {
 		rf[i] = 0;
 		rf_mirror[i] = 0;
@@ -992,17 +993,31 @@ void execute(uint8_t* mem, instr* imem, label_loc* labels, int label_count, bool
 			//******************************************
 			//****************************************** 
 			case SYSCALL:
-				if (rf[10]==0) {
-					printf( " +---+---+---+---+---+---+---+---+---+\n" );
+				
+				if (rf[10]==5) {
+					printf( " | %x ",rf[11] );
+					if (j==8)
+					{
+						printf( "|\n" );
+						j=0;
+					}
+					else
+						j++;
 				}
-				else if (rf[10]==1) {
-					printf( " | " );
+
+				else if (rf[10]==6){
+					
+					printf("*****************************\n");
+					printf("*                           *\n");
+					printf("*        Execution Done     *\n");
+					printf("*      Here's the result:   *\n");
+					printf("*                           *\n");
+					printf("*****************************\n");
+					
 				}
-				else if (rf[10]==2) {
-					printf( " %x ", rf[12]);
-				}
-				else if (rf[10]==3) {
-					printf( " |\n" );
+
+				else if (rf[10]==4) {
+					printf( " ERROR!!! " );
 				}
 				break;
 			//***************************************** *
